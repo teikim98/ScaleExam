@@ -16,6 +16,11 @@ public class Scale implements Serializable {
     this.password = password;
   }
 
+  public Scale(int weight , String password){
+    this.weight = weight;
+    this.password = password;
+  }
+
   public Scale(String name, int weight, String password) {
     this.name = name;
     this.weight = weight;

@@ -10,6 +10,14 @@ public class SuccessView {
     System.out.println("*************************************************");
   }
 
+
+
+  public static void printPassword(Scale scale){
+    System.out.println("*************************************************");
+    System.out.println("현재 " + scale.getName() + "비밀번호는 " + scale.getPassword() + "입니다");
+    System.out.println("*************************************************");
+  }
+
   public static void printMessage(String message){
     System.out.println(message + "\n");
   }

@@ -2,6 +2,7 @@ package mvc.view;
 
 import java.util.Scanner;
 import mvc.controller.ScaleController;
+
 import mvc.dto.Scale;
 
 public class MenuView {
@@ -60,37 +61,48 @@ public class MenuView {
 
   }
 
-  public  void searchByName(){
-    int count = 0;
+  public void searchByName() {
+    Scanner sc = new Scanner(System.in);
+
 
       System.out.println("검색할 이름을 입력하여 주십시요.");
-    System.out.print("이름 : ");
-    String name = sc.nextLine();
-    while (count < 3){
-      System.out.println("비밀번호를 입력하여 주십시요.");
-      System.out.print("비밀번호 : ");
-      String passWord = sc.nextLine();
-      controller.searchByName(new Scale(name,passWord));
-      count++;
-    }
-
+      System.out.print("이름: ");
+      String name = sc.nextLine();
+      int count = 0;
+      while (count < 3) {
+        System.out.println("비밀번호를 입력하여 주십시요.");
+        System.out.print("비밀번호: ");
+        String passWord = sc.nextLine();
+        Scale scale = controller.searchByName(new Scale(name, passWord));
+        if (scale != null) {
+          SuccessView.printScale(scale);
+          break; // 비밀번호가 맞으면 내부 루프 종료, 외부 루프도 종료
+        } else {
+          count++;
+          if (count == 3) {
+            System.out.println("비밀번호 입력 횟수를 초과했습니다. 다시 시도해주세요.");
+          }
+        }
+      }
 
   }
 
   public  void updateScale() {
-    System.out.println("검색할 이름을 입력하여 주십시요.");
-    System.out.print("이름 : ");
-    String name = sc.nextLine();
-    System.out.println("비밀번호를 입력하여 주십시요.");
-    System.out.print("비밀번호 : ");
-    String passWord = sc.nextLine();
-    controller.searchByName(new Scale(name,passWord));
 
-    System.out.println("변경할 몸무게를 입력해주세요");
-    System.out.print("몸무게 : ");
-    int weight = Integer.parseInt(sc.nextLine());
+      System.out.println("검색할 이름을 입력하여 주십시요.");
+      System.out.print("이름 : ");
+      String name = sc.nextLine();
+      System.out.println("비밀번호를 입력하여 주십시요.");
+      System.out.print("비밀번호 : ");
+      String passWord = sc.nextLine();
+      Scale scale = controller.searchByName(new Scale(name, passWord));
+      SuccessView.printScale(scale);
+      System.out.println("변경할 몸무게를 입력해주세요");
+      System.out.print("몸무게 : ");
+      int weight = Integer.parseInt(sc.nextLine());
 
-    controller.updateScale(new Scale(name , weight , passWord));
+      controller.updateScale(new Scale(name, weight, passWord));
+      SuccessView.printMessage("몸무게 변경 완료");
 
   }
 
@@ -101,9 +113,15 @@ public class MenuView {
     System.out.println("비밀번호를 입력하여 주십시요.");
     System.out.print("비밀번호 : ");
     String passWord = sc.nextLine();
+    Scale scale = controller.searchByName(new Scale(name, passWord));
+    SuccessView.printPassword(scale);
+    System.out.println("변경할 비밀번호를 입력해주세요");
+    System.out.print("비밀번호 : ");
+    String passwordChange = sc.nextLine();
 
-    controller.updatePassword(new Scale(name , passWord));
 
+    controller.updatePassword(new Scale(name , passwordChange));
+    SuccessView.printMessage("비밀번호 변경완료");
   }
 
 }
